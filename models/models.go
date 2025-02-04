@@ -17,3 +17,13 @@ type NewsResponse struct {
 	News    []News `json:"News"`
 	Error   string `json:"Error,omitempty"`
 }
+
+func (n *News) Validate() error {
+	if n.Title == "" {
+		return fmt.Errorf("title cannot be empty")
+	}
+	if n.Content == "" {
+		return fmt.Errorf("content cannot be empty")
+	}
+	return nil
+}
