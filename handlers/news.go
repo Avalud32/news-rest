@@ -52,6 +52,11 @@ func (h *NewsHandler) UpdateNews(c *fiber.Ctx) error {
 			Error:   fmt.Sprintf("invalid json: %v", err),
 		})
 	}
+	if err := news.Validate(); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(models.NewsResponse{
+			Success: false,
+			Error:   fmt.Sprintf("invalid %v", err),
+		})
 	if err := h.newsRepo.UpdateNews(id, news); err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(models.NewsResponse{
 			Success: false,
